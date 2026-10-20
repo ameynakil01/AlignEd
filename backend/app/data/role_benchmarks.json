@@ -1,0 +1,232 @@
+{
+  "roles": [
+    {
+      "id": "junior-flutter-developer",
+      "title": "Junior Flutter Developer",
+      "category": "Mobile Development",
+      "description": "Cross-platform mobile application developer focusing on responsive UI, state management, offline storage, and clean architecture.",
+      "skills": [
+        {
+          "name": "Dart",
+          "category": "Languages",
+          "importance": "core",
+          "weight": 1.0,
+          "description": "Strong proficiency with Dart language syntax, asynchronous futures, streams, and OOP concepts."
+        },
+        {
+          "name": "Flutter",
+          "category": "Frameworks",
+          "importance": "core",
+          "weight": 1.0,
+          "description": "Widget trees, stateful/stateless widgets, layouts, animations, and material/cupertino design."
+        },
+        {
+          "name": "State Management (Provider/Riverpod)",
+          "category": "Architecture",
+          "importance": "core",
+          "weight": 0.95,
+          "description": "State propagation, separation of business logic, reactive programming using Provider, Riverpod, or Bloc."
+        },
+        {
+          "name": "REST APIs",
+          "category": "Networking",
+          "importance": "core",
+          "weight": 0.9,
+          "description": "HTTP methods, JSON serialization/deserialization, error handling, dio/http client."
+        },
+        {
+          "name": "Firebase/Firestore",
+          "category": "Cloud & DB",
+          "importance": "recommended",
+          "weight": 0.85,
+          "description": "Authentication, Cloud Firestore real-time database, Cloud Functions, and Firebase push notifications."
+        },
+        {
+          "name": "SQLite",
+          "category": "Databases",
+          "importance": "recommended",
+          "weight": 0.8,
+          "description": "Local device persistence, relational queries, sqflite or Drift ORM."
+        },
+        {
+          "name": "Git",
+          "category": "Dev Tools",
+          "importance": "core",
+          "weight": 0.85,
+          "description": "Version control, branching strategies, commit hygiene, and pull request workflows."
+        }
+      ]
+    },
+    {
+      "id": "backend-python-engineer",
+      "title": "Backend Python Engineer",
+      "category": "Backend Engineering",
+      "description": "Server-side engineer specializing in robust RESTful services, database architecture, containerized environments, and automated testing.",
+      "skills": [
+        {
+          "name": "Python",
+          "category": "Languages",
+          "importance": "core",
+          "weight": 1.0,
+          "description": "Python 3.10+ mastery, data structures, generators, decorators, typing, and asyncio."
+        },
+        {
+          "name": "FastAPI/Flask",
+          "category": "Frameworks",
+          "importance": "core",
+          "weight": 1.0,
+          "description": "Designing high-throughput asynchronous APIs, Pydantic validation, dependency injection, routing."
+        },
+        {
+          "name": "PostgreSQL",
+          "category": "Databases",
+          "importance": "core",
+          "weight": 0.95,
+          "description": "Relational schema design, indexes, transactions, connection pooling, and ORM (SQLAlchemy/Tortoise)."
+        },
+        {
+          "name": "Docker",
+          "category": "DevOps",
+          "importance": "recommended",
+          "weight": 0.85,
+          "description": "Multi-stage Dockerfiles, docker-compose orchestration, container networking, and volumes."
+        },
+        {
+          "name": "REST APIs",
+          "category": "Networking",
+          "importance": "core",
+          "weight": 0.9,
+          "description": "HTTP specifications, status codes, JWT authentication, OpenAPI specs, rate limiting."
+        },
+        {
+          "name": "Redis",
+          "category": "Databases & Cache",
+          "importance": "recommended",
+          "weight": 0.8,
+          "description": "In-memory caching, TTL keys, pub/sub messaging, and distributed locks."
+        },
+        {
+          "name": "Unit Testing",
+          "category": "Quality Assurance",
+          "importance": "recommended",
+          "weight": 0.85,
+          "description": "Pytest suites, fixtures, mocking third-party APIs, coverage reporting, test-driven principles."
+        },
+        {
+          "name": "Git",
+          "category": "Dev Tools",
+          "importance": "core",
+          "weight": 0.85,
+          "description": "Branching, merge resolution, CI/CD pipeline triggers, and code review practices."
+        }
+      ]
+    },
+    {
+      "id": "data-analyst",
+      "title": "Data Analyst",
+      "category": "Data Science",
+      "description": "Data analytics professional extracting actionable insights through statistical analysis, SQL queries, and interactive visual dashboards.",
+      "skills": [
+        {
+          "name": "Python",
+          "category": "Languages",
+          "importance": "core",
+          "weight": 0.95,
+          "description": "Scripting data workflows, automation, file parsing, and exploratory data analysis."
+        },
+        {
+          "name": "Pandas",
+          "category": "Data Processing",
+          "importance": "core",
+          "weight": 1.0,
+          "description": "DataFrame transformations, data wrangling, missing data imputation, groupby, and joins."
+        },
+        {
+          "name": "NumPy",
+          "category": "Data Processing",
+          "importance": "core",
+          "weight": 0.9,
+          "description": "Multidimensional array operations, vectorization, linear algebra calculations."
+        },
+        {
+          "name": "SQL",
+          "category": "Databases",
+          "importance": "core",
+          "weight": 1.0,
+          "description": "Complex joins, window functions (ROW_NUMBER, RANK, LAG/LEAD), subqueries, aggregations."
+        },
+        {
+          "name": "Excel/Pivot Tables",
+          "category": "Spreadsheets",
+          "importance": "recommended",
+          "weight": 0.8,
+          "description": "VLOOKUP/XLOOKUP, Pivot tables, conditional formatting, basic financial/business modeling."
+        },
+        {
+          "name": "Data Visualization",
+          "category": "Visualization",
+          "importance": "recommended",
+          "weight": 0.85,
+          "description": "Matplotlib, Seaborn, Tableau or Power BI dashboarding, effective chart selection."
+        },
+        {
+          "name": "Statistical Analysis",
+          "category": "Mathematics",
+          "importance": "recommended",
+          "weight": 0.85,
+          "description": "Descriptive statistics, hypothesis testing (t-tests, ANOVA), correlation, regression."
+        }
+      ]
+    },
+    {
+      "id": "frontend-web-developer",
+      "title": "Frontend Web Developer",
+      "category": "Frontend Engineering",
+      "description": "Modern frontend developer crafting accessible, highly performant web applications with responsive components and state management.",
+      "skills": [
+        {
+          "name": "JavaScript/TypeScript",
+          "category": "Languages",
+          "importance": "core",
+          "weight": 1.0,
+          "description": "ES6+ syntax, closures, event loop, promises, async/await, static types, interfaces, generics."
+        },
+        {
+          "name": "React",
+          "category": "Frameworks",
+          "importance": "core",
+          "weight": 1.0,
+          "description": "Hooks (useState, useEffect, useMemo, useCallback), component lifecycle, virtual DOM, context API."
+        },
+        {
+          "name": "HTML5/CSS3",
+          "category": "Styling & Markup",
+          "importance": "core",
+          "weight": 0.95,
+          "description": "Semantic markup, accessibility (ARIA), flexbox, grid, responsive viewports, keyframe animations."
+        },
+        {
+          "name": "Tailwind CSS",
+          "category": "Styling & Markup",
+          "importance": "recommended",
+          "weight": 0.85,
+          "description": "Utility-first CSS patterns, theme customization, responsive breakpoints, pseudo-class variants."
+        },
+        {
+          "name": "REST APIs",
+          "category": "Networking",
+          "importance": "core",
+          "weight": 0.9,
+          "description": "Fetch API, Axios, async data handling, pagination, debouncing, optimistic UI updates."
+        },
+        {
+          "name": "Git",
+          "category": "Dev Tools",
+          "importance": "core",
+          "weight": 0.85,
+          "description": "Branching, rebasing, pull requests, conventional commits, GitHub actions."
+        }
+      ]
+    }
+  ]
+}
