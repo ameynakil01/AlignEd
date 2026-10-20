@@ -53,7 +53,7 @@ export default function MicroQuiz({ quiz, onQuizComplete, isPassed, isEngagement
     setIsSubmitting(true);
     setErrorMessage(null);
     try {
-      const result = await submitQuiz(quiz.quiz_id, answers, 60);
+      const result = await submitQuiz(quiz.quiz_id, answers, 60, quiz.questions);
       setQuizResult(result);
       if (result.passed) {
         onQuizComplete(true);
@@ -306,3 +306,4 @@ export default function MicroQuiz({ quiz, onQuizComplete, isPassed, isEngagement
     </div>
   );
 }
+

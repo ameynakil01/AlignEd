@@ -291,3 +291,4 @@ export default function CodeSandbox({ challenge, onSandboxComplete, isCompleted,
     </div>
   );
 }
+

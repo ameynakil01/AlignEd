@@ -200,3 +200,4 @@ class SkillExtractor:
         final_categories = {k: sorted(list(v)) for k, v in categories_map.items()}
 
         return sorted_skills, final_categories
+

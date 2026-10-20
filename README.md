@@ -141,3 +141,4 @@ Open `http://localhost:5173` in your browser.
 - **Native `<dialog>` Architecture**: Upload and Milestone Workspace overlays utilize native `<dialog>` elements triggered via `showModal()`.
 - **Light Dismiss with Coordinate Fallback**: Supports declarative `closedby="any"` alongside click boundary detection on `::backdrop` to ensure smooth dismissal across all modern desktop and mobile browsers.
 - **Scroll Containment**: Utilizes `overscroll-behavior: contain` and `overflow: hidden` on backdrop containers to prevent background document scrolling without causing scrollbar layout shifts.
+

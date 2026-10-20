@@ -230,3 +230,4 @@ async def verify_milestone(req: MilestoneVerificationRequest):
         "proof_of_work_hash": f"POW-{token}",
         "message": "Milestone successfully verified! Next milestone unlocked."
     }
+

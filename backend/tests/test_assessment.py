@@ -84,3 +84,4 @@ def test_sandbox_evaluator_html_card():
     res = SandboxEvaluator.evaluate(req)
     assert res.all_tests_passed is True
     assert res.passed is True
+

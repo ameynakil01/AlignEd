@@ -211,16 +211,24 @@ class RoadmapGenerator:
         target_skills = missing_skills if total_missing > 0 else covered_skills
 
         # Attempt Gemini generation if client is available
+        roadmap = None
         if client and target_skills:
             try:
                 roadmap = cls._generate_with_gemini(client, role_id, role_title, target_skills, covered_skills, student_name)
-                if roadmap and len(roadmap.milestones) > 0:
-                    return roadmap
             except Exception as e:
                 logger.error(f"Gemini API roadmap generation failed, falling back to expert curriculum: {e}")
 
-        # Deterministic, high-yield fallback generator
-        return cls._generate_fallback_roadmap(role_id, role_title, target_skills, covered_skills, student_name)
+        # Deterministic, high-yield fallback generator if Gemini did not produce a roadmap
+        if not roadmap or len(roadmap.milestones) == 0:
+            roadmap = cls._generate_fallback_roadmap(role_id, role_title, target_skills, covered_skills, student_name)
+
+        # Register all milestone quizzes into server session registry
+        from .quiz_generator import QuizGenerator
+        for m in roadmap.milestones:
+            if m.micro_quiz:
+                QuizGenerator.register_quiz(m.micro_quiz)
+
+        return roadmap
 
     @classmethod
     def _generate_with_gemini(
@@ -461,3 +469,4 @@ Respond ONLY with valid JSON conforming to this schema. Do not include markdown 
             total_weeks=len(milestones),
             milestones=milestones
         )
+

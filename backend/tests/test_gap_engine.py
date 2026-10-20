@@ -78,3 +78,4 @@ def test_skill_extractor_ner():
     assert "Git" in skills
     assert "Unit Testing" in skills
     assert "Redis" in skills
+

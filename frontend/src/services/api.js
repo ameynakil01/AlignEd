@@ -91,7 +91,7 @@ export async function generateQuiz(skillName, difficulty = 'intermediate', roleT
   return res.json();
 }
 
-export async function submitQuiz(quizId, answers, timeSpentSeconds = 0) {
+export async function submitQuiz(quizId, answers, timeSpentSeconds = 0, questions = null) {
   const res = await fetch(`${API_BASE}/submit-quiz`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -99,6 +99,7 @@ export async function submitQuiz(quizId, answers, timeSpentSeconds = 0) {
       quiz_id: quizId,
       answers,
       time_spent_seconds: timeSpentSeconds,
+      questions,
     }),
   });
 
@@ -146,3 +147,4 @@ export async function verifyMilestone(milestoneId, quizPassed, sandboxPassed, vi
   }
   return res.json();
 }
+

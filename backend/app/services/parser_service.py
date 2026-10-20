@@ -54,3 +54,4 @@ class ParserService:
             return ParserService.clean_text(raw_text)
         else:
             return ""
+

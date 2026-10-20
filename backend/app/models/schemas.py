@@ -150,6 +150,7 @@ class QuizSubmission(BaseModel):
     milestone_id: Optional[str] = None
     answers: Dict[int, int]
     time_spent_seconds: int = 0
+    questions: Optional[List[QuizQuestion]] = None
 
 
 class QuizResult(BaseModel):
@@ -185,3 +186,4 @@ class SandboxEvaluationResult(BaseModel):
     stdout: Optional[str] = ""
     error_message: Optional[str] = None
     feedback: str
+
