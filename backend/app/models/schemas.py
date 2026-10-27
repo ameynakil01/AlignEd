@@ -187,3 +187,54 @@ class SandboxEvaluationResult(BaseModel):
     error_message: Optional[str] = None
     feedback: str
 
+
+class UserRegisterRequest(BaseModel):
+    full_name: str
+    email: str
+    password: str
+    target_role: Optional[str] = "backend-python-engineer"
+
+
+class UserLoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+class UserProfile(BaseModel):
+    id: int
+    full_name: str
+    email: str
+    target_role: str
+    created_at: Optional[str] = None
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserProfile
+
+
+class VideoHeartbeatRequest(BaseModel):
+    milestone_id: str
+    interval: List[float]  # [start, end]
+    total_duration: float
+
+
+class VideoHeartbeatResponse(BaseModel):
+    milestone_id: str
+    watched_intervals: List[List[float]]
+    unique_watch_seconds: float
+    watch_percentage: float
+    video_verified: bool
+    quiz_unlocked: bool
+    message: str
+
+
+class DashboardStateResponse(BaseModel):
+    user: UserProfile
+    has_active_roadmap: bool
+    roadmap: Optional[Dict[str, Any]] = None
+    milestones: List[Dict[str, Any]] = Field(default_factory=list)
+    completion_percentage: float = 0.0
+
+

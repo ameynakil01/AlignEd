@@ -14,5 +14,13 @@ from .schemas import (
     QuizResult,
     SandboxEvaluationRequest,
     SandboxEvaluationResult,
+    UserRegisterRequest,
+    UserLoginRequest,
+    UserProfile,
+    TokenResponse,
+    VideoHeartbeatRequest,
+    VideoHeartbeatResponse,
+    DashboardStateResponse,
 )
+from .db_models import User, UserRoadmap, UserMilestoneProgress
 

@@ -14,6 +14,14 @@ class Settings(BaseSettings):
     APP_VERSION: str = "1.0.0"
     APP_DEBUG: bool = True
     
+    # Database persistence
+    DATABASE_URL: str = os.getenv("DATABASE_URL", f"sqlite:///{(BASE_DIR.parent / 'aligned.db').as_posix()}")
+    
+    # JWT Authentication
+    JWT_SECRET: str = os.getenv("JWT_SECRET", "aligned-super-secret-jwt-key-2026-production")
+    JWT_ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
+    
     # AI & Model configs
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", os.getenv("ALIGNED_GEMINI_API_KEY", ""))
     GEMINI_MODEL: str = "gemini-3.8-flash"

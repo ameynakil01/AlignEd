@@ -32,8 +32,12 @@ import RoadmapTimeline from './components/RoadmapTimeline';
 import EmbeddedViewer from './components/EmbeddedViewer';
 import MicroQuiz from './components/MicroQuiz';
 import CodeSandbox from './components/CodeSandbox';
+import AuthModal from './components/AuthModal';
+import { useAuth } from './context/AuthContext';
 
 export default function App() {
+  const { user, token, dashboardState, logout, isAuthenticated } = useAuth();
+
   const [roles, setRoles] = useState([]);
   const [selectedRole, setSelectedRole] = useState('backend-python-engineer');
   const [studentName, setStudentName] = useState('Alex Rivers');
@@ -42,6 +46,7 @@ export default function App() {
   const [roadmap, setRoadmap] = useState(null);
 
   const [isUploadOpen, setIsUploadOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isGeneratingRoadmap, setIsGeneratingRoadmap] = useState(false);
   const [isLoadingInitial, setIsLoadingInitial] = useState(true);
 
@@ -54,6 +59,31 @@ export default function App() {
 
   const workspaceDialogRef = useRef(null);
 
+  // Synchronize roadmap and progress when user is logged in
+  useEffect(() => {
+    if (dashboardState?.has_active_roadmap && dashboardState.roadmap) {
+      setRoadmap(dashboardState.roadmap);
+      if (dashboardState.roadmap.role_id) {
+        setSelectedRole(dashboardState.roadmap.role_id);
+      }
+      if (dashboardState.user?.full_name) {
+        setStudentName(dashboardState.user.full_name);
+      }
+      // Populate milestoneProgress map from persistent DB states
+      if (dashboardState.milestones) {
+        const progressMap = {};
+        dashboardState.milestones.forEach((m) => {
+          progressMap[m.milestone_id] = {
+            embed: m.video_verified || m.watch_percentage >= 75,
+            quiz: m.quiz_passed,
+            sandbox: m.sandbox_passed,
+          };
+        });
+        setMilestoneProgress(progressMap);
+      }
+    }
+  }, [dashboardState]);
+
   // Initialize roles and seed with sample student analysis
   useEffect(() => {
     async function loadData() {
@@ -61,7 +91,7 @@ export default function App() {
         const fetchedRoles = await fetchRoles();
         setRoles(fetchedRoles);
 
-        if (fetchedRoles.length > 0) {
+        if (!dashboardState?.has_active_roadmap && fetchedRoles.length > 0) {
           const defaultRoleId = 'backend-python-engineer';
           setSelectedRole(defaultRoleId);
 
@@ -70,7 +100,7 @@ export default function App() {
           const initialGap = await analyzeGap(defaultRoleId, defaultSkills);
           setGapData(initialGap);
 
-          const initialRoadmap = await generateRoadmap(defaultRoleId, defaultSkills, 'Alex Rivers');
+          const initialRoadmap = await generateRoadmap(defaultRoleId, defaultSkills, studentName || 'Alex Rivers');
           setRoadmap(initialRoadmap);
         }
       } catch (err) {
@@ -80,7 +110,7 @@ export default function App() {
       }
     }
     loadData();
-  }, []);
+  }, [dashboardState]);
 
   // Modern Web Guidance: Native <dialog> lifecycle and light dismiss for workspace modal
   useEffect(() => {
@@ -278,12 +308,12 @@ export default function App() {
             </div>
           </div>
 
-          {/* Role Selector & Upload Button */}
+          {/* Role Selector, User Auth & Upload Button */}
           <div className="flex items-center gap-3">
             <select
               value={selectedRole}
               onChange={(e) => handleRoleChange(e.target.value)}
-              className="hidden sm:block px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs font-medium text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="hidden lg:block px-3 py-1.5 rounded-xl bg-slate-800 border border-slate-700 text-xs font-medium text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
               {roles.map((r) => (
                 <option key={r.id} value={r.id}>
@@ -291,6 +321,34 @@ export default function App() {
                 </option>
               ))}
             </select>
+
+            {isAuthenticated ? (
+              <div className="flex items-center gap-2 bg-slate-800/80 border border-slate-700/80 rounded-xl px-2.5 py-1">
+                <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-indigo-500 to-cyan-400 text-slate-950 flex items-center justify-center font-bold text-xs shadow-sm">
+                  {user?.full_name?.charAt(0) || 'U'}
+                </div>
+                <div className="hidden sm:block text-left text-xs">
+                  <div className="font-semibold text-white leading-tight">{user?.full_name}</div>
+                  <div className="text-[10px] text-slate-400 leading-tight truncate max-w-[110px]">{user?.email}</div>
+                </div>
+                <button
+                  type="button"
+                  onClick={logout}
+                  className="ml-1 px-1.5 py-0.5 rounded text-[10px] text-slate-400 hover:text-red-400 hover:bg-slate-700/50 transition cursor-pointer"
+                  title="Sign Out"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setIsAuthModalOpen(true)}
+                className="px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-slate-200 transition cursor-pointer"
+              >
+                Sign In
+              </button>
+            )}
 
             <button
               onClick={() => setIsUploadOpen(true)}
@@ -344,6 +402,13 @@ export default function App() {
         selectedRole={selectedRole}
         setSelectedRole={setSelectedRole}
         onAnalysisComplete={handleAnalysisComplete}
+      />
+
+      {/* User Authentication Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        roles={roles}
       />
 
       {/* Milestone Learning & Verification Workspace Modal */}
@@ -429,14 +494,17 @@ export default function App() {
             <div className="p-6 overflow-y-auto flex-1 space-y-6">
               {activeWorkspaceTab === 'embed' && (
                 <EmbeddedViewer
+                  milestoneId={activeMilestone.milestone_id}
                   curatedEmbed={activeMilestone.curated_embed}
                   onEngagementComplete={handleEngagementComplete}
                   isCompleted={currentProgress.embed}
+                  initialWatchProgress={activeMilestone.watch_percentage || 0}
                 />
               )}
 
               {activeWorkspaceTab === 'quiz' && (
                 <MicroQuiz
+                  milestoneId={activeMilestone.milestone_id}
                   quiz={activeMilestone.micro_quiz}
                   onQuizComplete={handleQuizComplete}
                   isPassed={currentProgress.quiz}

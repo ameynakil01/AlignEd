@@ -345,15 +345,19 @@ Respond ONLY with valid JSON conforming to this schema. Do not include markdown 
         """Deterministic expert curriculum generator with realistic embedded videos and sandboxes."""
         milestones: List[RoadmapMilestone] = []
 
-        # Sort target skills: high priority first, then by weight
-        sorted_targets = sorted(
-            target_skills,
-            key=lambda s: (0 if s.priority == "high" else 1 if s.priority == "medium" else 2, -s.weight)
-        )
+        # Sort target skills: high priority first, then by weight (safely handling SkillMatch or str)
+        def _skill_priority(s):
+            p = getattr(s, 'priority', 'medium')
+            return 0 if p == "high" else 1 if p == "medium" else 2
 
-        for i, skill_match in enumerate(sorted_targets[:5]):
+        def _skill_weight(s):
+            return getattr(s, 'weight', 1.0)
+
+        sorted_targets = sorted(target_skills, key=lambda s: (_skill_priority(s), -_skill_weight(s)))
+
+        for i, skill_item in enumerate(sorted_targets[:5]):
             week_num = i + 1
-            skill_name = skill_match.skill_name
+            skill_name = getattr(skill_item, 'skill_name', skill_item if isinstance(skill_item, str) else str(skill_item))
             res = CURATED_RESOURCE_BANK.get(skill_name, None)
 
             # Fallback video if not directly in resource bank

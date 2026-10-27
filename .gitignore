@@ -18,3 +18,9 @@ Thumbs.db
 .env
 backend/.env
 
+# Local Databases
+*.db
+*.sqlite
+*.sqlite3
+backend/*.db
+

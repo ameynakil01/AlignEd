@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Clock, CheckCircle2, XCircle, AlertCircle, RefreshCw, ShieldCheck, ArrowRight, Award } from 'lucide-react';
 import { submitQuiz } from '../services/api';
 
-export default function MicroQuiz({ quiz, onQuizComplete, isPassed, isEngagementComplete }) {
+export default function MicroQuiz({ quiz, onQuizComplete, isPassed, isEngagementComplete, milestoneId }) {
   const [currentIdx, setCurrentIdx] = useState(0);
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(60);
@@ -53,7 +53,7 @@ export default function MicroQuiz({ quiz, onQuizComplete, isPassed, isEngagement
     setIsSubmitting(true);
     setErrorMessage(null);
     try {
-      const result = await submitQuiz(quiz.quiz_id, answers, 60, quiz.questions);
+      const result = await submitQuiz(quiz.quiz_id, answers, 60, quiz.questions, milestoneId);
       setQuizResult(result);
       if (result.passed) {
         onQuizComplete(true);
